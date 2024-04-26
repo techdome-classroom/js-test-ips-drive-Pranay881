@@ -1,33 +1,25 @@
-const assert = require("assert");
-const { longestSubstring } = require("./program2");
+function longestSubstring(s) {
+    if (!s) return 0;
 
-describe("Test cases for longestSubstring function", function () {
+    let maxLength = 0;
+    let start = 0;
+    let end = 0;
+    const seen = new Set();
 
-    it("Returns 3 for 'abcabcbb'", function () {
-        const result = longestSubstring("abcabcbb");
-        assert.equal(result, 3);
-    });
+    while (end < s.length) {
+        if (!seen.has(s[end])) {
+            seen.add(s[end]);
+            end++;
+            maxLength = Math.max(maxLength, end - start);
+        } else {
+            seen.delete(s[start]);
+            start++;
+        }
+    }
 
-    it("Returns 1 for 'bbbbb'", function () {
-        const result = longestSubstring("bbbbb");
-        assert.equal(result, 1);
-    });
+    return maxLength;
+}
 
-    it("Returns 3 for 'pwwkew'", function () {
-        const result = longestSubstring("pwwkew");
-        assert.equal(result, 3);
-    });
-
-    it("Returns 0 for an empty string", function () {
-        const result = longestSubstring("");
-        assert.equal(result, 0);
-    });
-
-    it("Returns 1 for a string with one character", function () {
-        const result = longestSubstring("a");
-        assert.equal(result, 1);
-    });
-
-});
+module.exports = { longestSubstring };
 
 
